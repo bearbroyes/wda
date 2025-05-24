@@ -96,12 +96,6 @@ local function highlightPlayers()
     end
 end
 
-Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function(character)
-        highlightPlayers()
-    end)
-end)
-
 for _, player in ipairs(Players:GetPlayers()) do
     player.CharacterAdded:Connect(function(character)
         highlightPlayers()
