@@ -1,0 +1,113 @@
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/bearbroyes/bearbro/refs/heads/main/Discord%20Hub")()
+local win = DiscordLib:Window("Zet Hub")
+local serv = win:Server("Main", "")
+local textbs = serv:Channel("Textboxes")
+
+-- Текстовое поле для скорости
+textbs:Textbox("Speed", "16", true, function(t)
+    local speed = tonumber(t)
+    if speed then
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        humanoid.WalkSpeed = speed
+    end
+    DiscordLib:Notification("Notification", "WalkSpeed is " .. speed, "Okay!")
+end)
+
+-- Текстовое поле для силы прыжка
+textbs:Textbox("Jump Power", "50", true, function(t)
+    local jumpPower = tonumber(t)
+    if jumpPower then
+        jumpPower = math.clamp(jumpPower, 0, 9999999999999999)
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        humanoid.JumpPower = jumpPower
+        print("Установлена сила прыжка: " .. jumpPower)
+        DiscordLib:Notification("Notification", "Jump Power is " .. jumpPower, "Okay!")
+    end
+end)
+
+local btns = serv:Channel("Buttons")
+
+btns:Button("Infinity Yield", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+end)
+
+btns:Button("Black", function()
+local Lighting = game:GetService("Lighting")
+
+-- Удаляем старое небо
+for _, child in pairs(Lighting:GetChildren()) do
+    if child:IsA("Sky") then
+        child:Destroy()
+    end
+end
+     
+local blackSky = Instance.new("Sky")
+blackSky.SkyboxBk = "rbxassetid://1"    
+blackSky.SkyboxDn = "rbxassetid://1"   
+blackSky.SkyboxFt = "rbxassetid://1"   
+blackSky.SkyboxLf = "rbxassetid://1"   
+blackSky.SkyboxRt = "rbxassetid://1"   
+blackSky.SkyboxUp = "rbxassetid://1"   
+blackSky.Parent = Lighting
+Lighting.Brightness = 0  -- Полная темнота
+Lighting.OutdoorAmbient = Color3.new(0, 0, 0) 
+end)
+
+-----------------------------------------------
+btns:Button("Remove Black", function()
+local Lighting = game:GetService("Lighting")
+
+   
+for _, child in pairs(Lighting:GetChildren()) do
+    if child:IsA("Sky") then
+        child:Destroy()
+    end
+end
+local blackSky = Instance.new("Sky")
+blackSky.SkyboxBk = "rbxassetid://1"    
+blackSky.SkyboxDn = "rbxassetid://1"   
+blackSky.SkyboxFt = "rbxassetid://1"   
+blackSky.SkyboxLf = "rbxassetid://1"   
+blackSky.SkyboxRt = "rbxassetid://1"   
+blackSky.SkyboxUp = "rbxassetid://1" 
+blackSky.Parent = Lighting
+Lighting.Brightness = 1    
+Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
+end)
+-----------------------------------------------
+btns:Button("ESP", function()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local function highlightPlayers()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= Players.LocalPlayer and player.Character then
+            local highlight = Instance.new("Highlight")
+            highlight.FillTransparency = 0.7
+            highlight.OutlineTransparency = 0  --  
+            highlight.FillColor = Color3.fromRGB(255, 0, 0)
+            highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+            highlight.Parent = player.Character
+        end
+    end
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        highlightPlayers()
+    end)
+end)
+
+for _, player in ipairs(Players:GetPlayers()) do
+    player.CharacterAdded:Connect(function(character)
+        highlightPlayers()
+    end)
+    if player.Character then
+        highlightPlayers()
+    end
+end
+end)
