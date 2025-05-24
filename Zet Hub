@@ -75,7 +75,7 @@ blackSky.SkyboxLf = "rbxassetid://1"
 blackSky.SkyboxRt = "rbxassetid://1"   
 blackSky.SkyboxUp = "rbxassetid://1" 
 blackSky.Parent = Lighting
-Lighting.Brightness = 1    
+Lighting.Brightness = 1.5    
 Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
 end)
 -----------------------------------------------
