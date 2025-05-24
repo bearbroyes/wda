@@ -111,3 +111,50 @@ for _, player in ipairs(Players:GetPlayers()) do
     end
 end
 end)
+btns:Button("Remove ESP", function()
+local Players = game:GetService("Players")
+
+-- Удаляет все Highlight эффекты
+local function removeHighlights()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character then
+            for _, child in ipairs(player.Character:GetDescendants()) do
+                if child:IsA("Highlight") then
+                    child:Destroy()
+                end
+            end
+        end
+    end
+end
+
+-- Восстанавливает нормальную прозрачность
+local function resetTransparency()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character then
+            for _, part in ipairs(player.Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.LocalTransparencyModifier = 0
+                end
+            end
+        end
+    end
+end
+
+-- Удаляет ESP-рамки
+local function removeESP()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character then
+            for _, child in ipairs(player.Character:GetDescendants()) do
+                if child.Name:match("ESP_") then
+                    child:Destroy()
+                end
+            end
+        end
+    end
+end
+
+-- Выполняем все функции очистки
+removeHighlights()
+resetTransparency()
+removeESP()
+end)
